@@ -1,0 +1,34 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS-specific
+.DS_Store
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Build
+dist/
+build/
+
+# Coverage directory used by testing tools
+coverage/
+
+# Debugger
+.vscode/
+.idea/
+
+# Optional: Ignore local databases or uploads
+*.sqlite
+uploads/
