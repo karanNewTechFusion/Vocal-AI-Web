@@ -1,29 +1,36 @@
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import AboutSection from './components/AboutSection';
-import FeaturesSection from './components/FeaturesSection';
-import TestimonialsSection from './components/TestimonialsSection';
-import PricingSection from './components/PricingSection';
-import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
-import FAQSection from './components/FAQSection';
-import ReelsSection from './components/ReelsSection';
+import React from 'react';
 import './index.css';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+import Features from './pages/Features';
+import Testimonials from './pages/Testimonials';
+import Pricing from './pages/Pricing';
+import Contact from './pages/Contact';
+import Faq from './pages/Faq';
+import Reels from './pages/Reels';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
-    <div className="bg-dark min-h-screen text-white font-sans">
-      <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <FeaturesSection />
-      <TestimonialsSection />
-      <PricingSection />
-      <ReelsSection />
-      <FAQSection />
-      <ContactSection />
-      <Footer />
-    </div>
+    
+    <Routes>
+
+       <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/reels" element={<Reels />} />
+        <Route path="*" element={<NotFound />} />
+
+
+ 
+
+    </Routes>
+
   );
 }
 

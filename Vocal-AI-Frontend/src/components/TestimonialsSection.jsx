@@ -25,42 +25,7 @@ const testimonials = [
       rating: 5,
     },
   ];
-  
-//   export default function TestimonialsSection() {
-//     return (
-//       <section className="py-24 px-4 md:px-16" id="testimonials">
-//         <h2 className="text-4xl font-bold mb-12 text-center bg-gradient-to-r from-accent-blue via-accent-purple to-accent-pink bg-clip-text text-transparent">
-//           What Artists Say
-//         </h2>
-  
-//         {/* Scrollable testimonial container */}
-//         <div className="testimonial-swiper no-scrollbar auto-scroll flex gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4">
-//           {testimonials.map((t, i) => (
-//             <div
-//               key={i}
-//               className="glass snap-center min-w-[320px] max-w-xs p-8 rounded-xl flex flex-col items-center text-center hover:neon transition duration-300"
-//             >
-//               <img
-//                 src={t.photo}
-//                 alt={t.name}
-//                 className="w-20 h-20 rounded-full mb-4 border-4 border-accent-pink object-cover"
-//               />
-//               <h3 className="text-lg font-semibold mb-2">{t.name}</h3>
-//               <div className="flex mb-2">
-//                 {Array.from({ length: t.rating }).map((_, idx) => (
-//                   <span key={idx} className="text-accent-pink text-xl">★</span>
-//                 ))}
-//                 {Array.from({ length: 5 - t.rating }).map((_, idx) => (
-//                   <span key={idx} className="text-gray-600 text-xl">★</span>
-//                 ))}
-//               </div>
-//               <p className="text-gray-300">"{t.quote}"</p>
-//             </div>
-//           ))}
-//         </div>
-//       </section>
-//     );
-//   }
+
 export default function TestimonialsSection() {
     const repeatedTestimonials = [...testimonials, ...testimonials]; // duplicate for seamless scroll
   
