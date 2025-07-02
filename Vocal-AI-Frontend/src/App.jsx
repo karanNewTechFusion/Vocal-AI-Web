@@ -10,6 +10,8 @@ import Contact from './pages/Contact';
 import Faq from './pages/Faq';
 import Reels from './pages/Reels';
 import NotFound from './pages/NotFound';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/faq" element={<Faq />} />
         <Route path="/reels" element={<Reels />} />
         <Route path="*" element={<NotFound />} />
+        <Route path='/login' element={<Login/>}/>
+        <Route path="/signup" element={<Signup />} />
 
 
  
