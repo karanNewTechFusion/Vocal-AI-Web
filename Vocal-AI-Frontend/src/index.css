@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.glass {
+  background: rgba(30, 30, 40, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 2rem;
+}
+.neon {
+  box-shadow: 0 0 16px #A259FF, 0 0 32px #3A8DFF;
+}
+
+.animate-pulse-slow { animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 16px #A259FF, 0 0 32px #3A8DFF; }
+  50% { opacity: 0.7; box-shadow: 0 0 32px #A259FF, 0 0 48px #3A8DFF; }
+}
+
+
+.testimonial-swiper {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .testimonial-swiper::-webkit-scrollbar {
+    display: none !important;
+  }
+  /* Hide scrollbar */
+.testimonial-track::-webkit-scrollbar {
+    display: none;
+  }
+  .testimonial-track {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  /* Animation */
+  @keyframes scroll-x {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* Animation utility */
+  .animate-scroll-x {
+    animation: scroll-x 40s linear infinite;
+  }
+  
