@@ -1,6 +1,7 @@
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { signup } from '../services/auth';
 import Navbar from '../components/Navbar';
 import { Eye, EyeOff } from 'lucide-react';
 
@@ -32,12 +33,7 @@ export default function Signup() {
 
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/signup', {
-        name,
-        email,
-        password,
-      });
-
+      await signup(name, email, password);
       navigate('/login');
     } catch (err) {
       setErrorMsg(err.response?.data?.message || 'Signup failed');
@@ -47,9 +43,7 @@ export default function Signup() {
   };
 
   return (
-    <>
-        <div className="bg-dark min-h-screen text-white font-sans">
-
+    <div className="bg-dark min-h-screen text-white font-sans">
       <Navbar />
       <div className="w-full h-screen bg-[#0c0a15] flex items-center justify-center px-4">
         <div className="bg-[#14121b] text-white rounded-3xl shadow-xl p-8 w-full max-w-md border border-gray-800 backdrop-blur-md">
@@ -64,17 +58,14 @@ export default function Signup() {
             </Link>
           </div>
 
-          {/* Heading */}
           <h2 className="text-xl font-bold text-center bg-gradient-to-r from-accent-blue via-accent-purple to-accent-pink bg-clip-text text-transparent mb-5">
             Create your account
           </h2>
 
-          {/* Error */}
           {errorMsg && (
             <p className="text-sm text-red-500 text-center mb-4">{errorMsg}</p>
           )}
 
-          {/* Form */}
           <form className="space-y-4" onSubmit={handleSignup}>
             <input
               type="text"
@@ -145,7 +136,6 @@ export default function Signup() {
           </p>
         </div>
       </div>
-      </div>
-    </>
+    </div>
   );
 }

@@ -21,10 +21,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
-  res.json({ message: "API working " });
+  res.json({ message: "API working...." });
 });
 app.use("/api/users", userRoutes);
-app.use("/audio", audioRoutes); // 
+app.use("/api/audio", audioRoutes); // 
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on http://0.0.0.0:${PORT}`);

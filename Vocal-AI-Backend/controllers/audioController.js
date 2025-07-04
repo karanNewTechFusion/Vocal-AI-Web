@@ -13,6 +13,7 @@ import Audio from "../models/Audio.js";
 import { uploadFileToStorage } from "../utility/storageHelper.js";
 import { generateSingingFeedback } from "../utility/aiFeedbackHelper.js";
 import { generateFeedbackTTS } from "../utility/generateTTS.js"; // adjust path if needed
+import axios from "axios";
 dotenv.config();
 
 // Setup
@@ -218,5 +219,82 @@ export const analyzeTempAudio = async (req, res) => {
   } catch (err) {
     console.error("❌ Temp audio analysis failed:", err);
     return sendResponse(res, false, 500, "Internal error", { error: err.message });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 📁 controllers/audioController.js
+export const getUserAudios = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const audios = await Audio.find({ user_id: userId }).sort({ createdAt: -1 });
+
+    return sendResponse(res, true, 200, "Fetched user's recordings", audios);
+  } catch (err) {
+    console.error("❌ Fetch error:", err);
+    return sendResponse(res, false, 500, "Failed to fetch recordings", { error: err.message });
+  }
+};
+
+
+// 📁 controllers/audioController.js
+export const deleteAudio = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await Audio.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return sendResponse(res, false, 404, "Audio not found");
+    }
+
+    return sendResponse(res, true, 200, "Audio deleted successfully");
+  } catch (err) {
+    console.error("❌ Delete error:", err);
+    return sendResponse(res, false, 500, "Failed to delete audio", { error: err.message });
+  }
+};
+
+
+
+// 📁 controllers/audioController.js
+
+
+export const downloadAudio = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const audio = await Audio.findById(id);
+
+    if (!audio) {
+      return sendResponse(res, false, 404, "Audio not found");
+    }
+
+    // Assuming audio.url is a public cloud URL (e.g. Cloudinary or S3)
+    const response = await axios.get(audio.url, { responseType: "stream" });
+
+    res.setHeader("Content-Disposition", `attachment; filename="${audio.title}.mp3"`);
+    response.data.pipe(res);
+  } catch (err) {
+    console.error("❌ Download error:", err);
+    return sendResponse(res, false, 500, "Failed to download audio", { error: err.message });
   }
 };
