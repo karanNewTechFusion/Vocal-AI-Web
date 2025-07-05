@@ -26,8 +26,8 @@ export const finalizeAndSaveAudio = async ({ audioFile, title, user_id }) => {
 };
 
 // Get all audios by a user
-export const fetchUserRecordings = async (userId) => {
-  const res = await API.get(`/audio/user/${userId}`);
+export const fetchUserRecordings = async (user_id) => {
+  const res = await API.get(`/audio/user/${user_id  }`);
   return res.data;
 };
 
