@@ -105,7 +105,9 @@ export default function PricingSection() {
   const tiers = isYearly ? yearlyTiers : monthlyTiers;
 
   return (
-    <section className="py-24 px-4 md:px-16" id="pricing">
+   
+<section className="py-8 px-2 sm:px-4 md:px-16" id="pricing">
+
       <h2 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-accent-blue via-accent-purple to-accent-pink bg-clip-text text-transparent">Pricing</h2>
       <div className="flex justify-center mb-12">
         <div className="flex items-center bg-dark/70 glass rounded-full p-2 gap-2">

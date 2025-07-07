@@ -37,7 +37,7 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section className="py-24 px-4 md:px-16 max-w-3xl mx-auto" id="faq">
+    <section className="py-8 px-4 md:px-16 max-w-3xl mx-auto" id="faq">
       <h2 className="text-4xl font-bold mb-10 text-center bg-gradient-to-r from-accent-blue via-accent-purple to-accent-pink bg-clip-text text-transparent">Frequently Asked Questions</h2>
       <div className="space-y-4">
         {faqs.map((faq, idx) => (

@@ -5,22 +5,37 @@ dotenv.config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-export const generateSingingFeedback = async (stability, projection) => {
+export const generateSingingFeedback = async (audioUrl) => {
   const prompt = `
-You're a professional vocal coach. Based on the following metrics:
+You are a professional Indian vocal coach who trains students in Hindi/Bollywood songs.
 
-- Pitch Stability: ${stability}
-- Projection (mean volume in dB): ${projection}
+A student has submitted a singing audio:
+🔗 Audio URL: ${audioUrl}
 
-First, evaluate their pitch stability — is it consistent or going off-key?
-Then check their voice projection — is it weak, average, or strong?
-Most importantly, point out exact lines or words where they made noticeable mistakes, such as going too fast, too slow, off-pitch, or unclear pronunciation.
-Give line-by-line feedback like this example:
-:musical_note: Line: "Ae mere hamsafar, ae mere jaane jaan, meri manzil hai tu, tu hi mera jahaan"
- :point_right: Feedback: "Jab aap 'jaane jaan' bolte ho, tab aapki speed thodi badh jaati hai aur clarity kam ho jaati hai. Aap is line ko thoda smoothly aur feel ke sath gaya karo, jisse emotion achhe se deliver ho."
-Aisi har line ke liye point-wise suggest karo ki aapne yahan aisa kiya, aap yeh try karo to behtar hoga.
-Always keep the tone friendly, beginner-friendly, and motivating. Use Hindi for the feedback and examples.
-End with overall summary and motivation: "Aapka effort bohot achha tha, bas thoda sa practice karein pitch aur clarity pe — aap definitely improve karenge!`;
+🎯 Your task:
+1. Listen and understand what the student is singing (even if incomplete or slightly unclear).
+2. Transcribe the lyrics as accurately as possible.
+3. For each line, analyze the following:
+   - 🎵 Sur (Pitch): Is the student singing in tune or going off-key?
+   - 🗣️ Uchcharan (Pronunciation): Any unclear or mispronounced words?
+   - 🕐 Flow & Emotion: Any unnecessary gaps, speed issues, or lack of emotion?
+
+✅ Format your feedback like this:
+🎵 Line: "Ae mere hamsafar, ae mere jaane jaan"
+👉 Feedback: "Jaane jaan bolte waqt pitch halka sa neeche chala gaya. Thoda aur sur pe control aur feel lana hoga."
+
+✨ Guidelines:
+- Use Hinglish (mix of Hindi and English) for better understanding
+- Keep tone warm, friendly, and beginner-friendly
+- Use emojis and clear suggestions to motivate
+- Give 1-2 detailed line-by-line feedback points
+- End with a short motivational summary like:
+  "Aapka effort bohot achha tha. Agar aap thoda aur sur aur clarity pe kaam karenge, toh singing next level ho sakti hai! 💪🎶"
+
+Avoid technical jargon. Your job is to sound like a real, supportive vocal coach helping a student grow.
+
+Now generate the feedback.
+`;
 
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -29,6 +44,6 @@ End with overall summary and motivation: "Aapka effort bohot achha tha, bas thod
     return response.text().trim();
   } catch (error) {
     console.error("❌ Gemini feedback error:", error);
-    return "Could not generate feedback right now. Please try again.";
+    return "Gemini se feedback nahi mil paya. Thodi der baad try karein.";
   }
 };

@@ -1,9 +1,7 @@
-
-import bcrypt from 'bcryptjs';
-import User from '../models/User.js';
-import { sendResponse } from '../utility/responseHelper.js';
-import { generateToken } from '../utility/jwt.js';
-
+import bcrypt from "bcryptjs";
+import User from "../models/User.js";
+import { sendResponse } from "../utility/responseHelper.js";
+import { generateToken } from "../utility/jwt.js";
 
 // Signup Controller
 
@@ -22,14 +20,14 @@ export const signUpUser = async (req, res) => {
     const newUser = await User.create({
       email: emailNormalized,
       password: hashedPassword,
-      name: name || '',
+      name: name || "",
     });
 
     const token = generateToken({ id: newUser._id });
 
     return sendResponse(res, true, 201, "User registered successfully", {
       user: {
-        _id: newUser._id,            // ✅ Use `_id` for consistency
+        _id: newUser._id, // ✅ Use `_id` for consistency
         email: newUser.email,
         name: newUser.name,
       },
@@ -40,8 +38,6 @@ export const signUpUser = async (req, res) => {
     return sendResponse(res, false, 500, "Server error", err);
   }
 };
-
-
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -62,7 +58,7 @@ export const loginUser = async (req, res) => {
 
     return sendResponse(res, true, 200, "Login successful", {
       user: {
-        _id: user._id,               // ✅ Use `_id` for consistency
+        _id: user._id, // ✅ Use `_id` for consistency
         email: user.email,
         name: user.name,
       },
@@ -73,5 +69,3 @@ export const loginUser = async (req, res) => {
     return sendResponse(res, false, 500, "Server error", err);
   }
 };
-
-

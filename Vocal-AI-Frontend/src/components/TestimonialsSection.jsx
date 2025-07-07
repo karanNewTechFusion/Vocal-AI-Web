@@ -30,7 +30,7 @@ export default function TestimonialsSection() {
     const repeatedTestimonials = [...testimonials, ...testimonials]; // duplicate for seamless scroll
   
     return (
-      <section className="py-24 px-4 md:px-16 overflow-hidden" id="testimonials">
+      <section className="py-8 px-4 md:px-16 overflow-hidden" id="testimonials">
         <h2 className="text-4xl font-bold mb-12 text-center bg-gradient-to-r from-accent-blue via-accent-purple to-accent-pink bg-clip-text text-transparent">
           What Artists Say
         </h2>

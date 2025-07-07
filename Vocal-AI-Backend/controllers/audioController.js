@@ -12,7 +12,7 @@ import dotenv from "dotenv";
 import Audio from "../models/Audio.js";
 import { uploadFileToStorage } from "../utility/storageHelper.js";
 import { generateSingingFeedback } from "../utility/aiFeedbackHelper.js";
-import { generateFeedbackTTS } from "../utility/generateTTS.js"; // adjust path if needed
+import { generateFeedbackTTS } from "../utility/generateTTS.js";
 import axios from "axios";
 dotenv.config();
 
@@ -140,48 +140,6 @@ export const finalizeAndSaveAudio = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
-// // 🔍 Temporary audio analysis API – No save, only analysis
-// export const analyzeTempAudio = async (req, res) => {
-//   try {
-//     const { file } = req;
-
-//     if (!file) {
-//       return sendResponse(res, false, 400, "Audio file is required");
-//     }
-
-//     const mp3Buffer = await convertToMp3(file.buffer);
-//     const wavBuffer = await convertToWav(mp3Buffer);
-//     const pitches = await decodePitch(wavBuffer);
-//     const stability = std(pitches);
-//     const projection = await extractRMS(mp3Buffer);
-
-//     // 🧠 Add OpenAI feedback here (stubbed for now)
-//     const aiFeedback = `Your pitch is ${Math.round(stability)} stable. Try articulating clearer.`
-
-//     return sendResponse(res, true, 200, "Temporary analysis completed", {
-//       pitchData: pitches.slice(0, 100),
-//       stability,
-//       projection,
-//       aiFeedback,
-//       previewAudio: mp3Buffer.toString('base64'), // Optional: send preview for client-side audio playback
-//     });
-//   } catch (err) {
-//     console.error("❌ Temp audio analysis failed:", err);
-//     return sendResponse(res, false, 500, "Internal error", { error: err.message });
-//   }
-// };
-
-
-
-
 export const analyzeTempAudio = async (req, res) => {
   try {
     const { file } = req;
@@ -191,13 +149,20 @@ export const analyzeTempAudio = async (req, res) => {
     }
 
     const mp3Buffer = await convertToMp3(file.buffer);
+    const fileName = `${uuidv4()}.mp3`;
+    const fileUrl = await uploadFileToStorage(mp3Buffer, fileName);
+
+    if (!fileUrl) {
+      return sendResponse(res, false, 500, "Audio upload failed");
+    }
+
     const wavBuffer = await convertToWav(mp3Buffer);
     const pitches = await decodePitch(wavBuffer);
     const stability = std(pitches);
     const projection = await extractRMS(mp3Buffer);
 
-    // 🌟 Generate AI feedback
-    const aiFeedback = await generateSingingFeedback(stability, projection);
+    // 🌟 Generate AI feedback from Gemini using audio URL
+    const aiFeedback = await generateSingingFeedback(fileUrl);
 
     // 🗣️ Convert feedback to voice
     const ttsPath = await generateFeedbackTTS(aiFeedback, "feedback.mp3");
@@ -213,50 +178,34 @@ export const analyzeTempAudio = async (req, res) => {
       stability,
       projection,
       aiFeedback,
-      previewAudio: mp3Buffer.toString("base64"), // Optional: user playback
-      voiceFeedback: feedbackAudioBase64, // 👈 Base64 TTS audio
+      previewAudio: mp3Buffer.toString("base64"),
+      voiceFeedback: feedbackAudioBase64,
     });
   } catch (err) {
     console.error("❌ Temp audio analysis failed:", err);
-    return sendResponse(res, false, 500, "Internal error", { error: err.message });
+    return sendResponse(res, false, 500, "Internal error", {
+      error: err.message,
+    });
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 📁 controllers/audioController.js
 export const getUserAudios = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const audios = await Audio.find({ user_id: userId }).sort({ createdAt: -1 });
+    const audios = await Audio.find({ user_id: userId }).sort({
+      createdAt: -1,
+    });
 
     return sendResponse(res, true, 200, "Fetched user's recordings", audios);
   } catch (err) {
     console.error("❌ Fetch error:", err);
-    return sendResponse(res, false, 500, "Failed to fetch recordings", { error: err.message });
+    return sendResponse(res, false, 500, "Failed to fetch recordings", {
+      error: err.message,
+    });
   }
 };
 
-
-// 📁 controllers/audioController.js
 export const deleteAudio = async (req, res) => {
   try {
     const { id } = req.params;
@@ -270,14 +219,11 @@ export const deleteAudio = async (req, res) => {
     return sendResponse(res, true, 200, "Audio deleted successfully");
   } catch (err) {
     console.error("❌ Delete error:", err);
-    return sendResponse(res, false, 500, "Failed to delete audio", { error: err.message });
+    return sendResponse(res, false, 500, "Failed to delete audio", {
+      error: err.message,
+    });
   }
 };
-
-
-
-// 📁 controllers/audioController.js
-
 
 export const downloadAudio = async (req, res) => {
   try {
@@ -288,13 +234,17 @@ export const downloadAudio = async (req, res) => {
       return sendResponse(res, false, 404, "Audio not found");
     }
 
-    // Assuming audio.url is a public cloud URL (e.g. Cloudinary or S3)
     const response = await axios.get(audio.url, { responseType: "stream" });
 
-    res.setHeader("Content-Disposition", `attachment; filename="${audio.title}.mp3"`);
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${audio.title}.mp3"`
+    );
     response.data.pipe(res);
   } catch (err) {
     console.error("❌ Download error:", err);
-    return sendResponse(res, false, 500, "Failed to download audio", { error: err.message });
+    return sendResponse(res, false, 500, "Failed to download audio", {
+      error: err.message,
+    });
   }
 };
