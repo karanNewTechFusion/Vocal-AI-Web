@@ -11,6 +11,7 @@ export default function Subscription() {
         <main className="flex-1 overflow-auto bg-[#0c0a15] text-white p-6">
           <PricingSection />
         </main>
+        
       </div>
     </div>
   );
