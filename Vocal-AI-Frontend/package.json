@@ -2,9 +2,11 @@
   "name": "music-project",
   "version": "1.0.0",
   "private": true,
-  "homepage": ".",
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+   "homepage": "https://vocal-ai"
+,
+
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.10.0",
     "framer-motion": "^11.0.0",
