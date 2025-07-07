@@ -6,6 +6,7 @@ A modern, interactive, and visually appealing landing page for an AI-based music
 - Dark mode with neon gradients and glassmorphism
 - Animated hero section
 - Responsive design
+hello
 - Feature cards, testimonials, pricing, and contact form
 
 ## Getting Started
