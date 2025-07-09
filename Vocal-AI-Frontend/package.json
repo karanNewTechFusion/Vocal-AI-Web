@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@heroicons/react": "^2.1.1",
-   "homepage": "https://vocal-ai"
-,
+   "homepage": ".",
+
 
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.10.0",
