@@ -13,7 +13,7 @@ import Faq from './pages/Faq';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
-
+//yes
 // Protected Pages
 import Practice from './pages/Practice';
 import Progress from './pages/Progress';
