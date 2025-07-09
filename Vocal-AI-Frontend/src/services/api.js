@@ -3,7 +3,8 @@ import axios from 'axios';
 
 // Base API instance
 const API = axios.create({
-  baseURL: 'http://localhost:8000/api', // adjust if deploying
+  // baseURL: 'http://localhost:8000/api', // adjust if deploying
+  baseURL: 'https://vocal-ai-web.onrender.com/api', // production URL
 });
 
 // 🔐 Request Interceptor to attach token
