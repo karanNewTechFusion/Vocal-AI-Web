@@ -1,6 +1,6 @@
-
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Menu,
   LayoutDashboard,
@@ -10,11 +10,12 @@ import {
   CreditCard,
   LogOut,
 } from "lucide-react";
+import { logout } from "../redux/slices/authSlice"; // ✅ adjust path if needed
 
 const links = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   { name: "Practice", path: "/practice", icon: BookOpenCheck },
-  { name: "Progress", path: "/progress", icon: BarChart },
+  // { name: "Progress", path: "/progress", icon: BarChart },
   { name: "Recordings", path: "/recordings", icon: Mic },
   { name: "Subscription", path: "/subscription", icon: CreditCard },
 ];
@@ -22,6 +23,15 @@ const links = [
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout()); // clears Redux state
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+    navigate("/login"); // redirect to login
+  };
 
   return (
     <div
@@ -63,14 +73,18 @@ export default function Sidebar() {
         })}
       </ul>
 
-      {!collapsed && (
-        <button className="flex items-center gap-2 mt-20 text-sm text-red-500 hover:text-white hover:bg-red-600 px-3 py-2 rounded-xl transition">
+      {!collapsed ? (
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 mt-20 text-sm text-red-500 hover:text-white hover:bg-red-600 px-3 py-2 rounded-xl transition"
+        >
           <LogOut size={18} /> Logout
         </button>
-      )}
-
-      {collapsed && (
-        <button className="mt-20 flex justify-center w-full text-red-500 hover:text-white hover:bg-red-600 p-2 rounded-xl transition">
+      ) : (
+        <button
+          onClick={handleLogout}
+          className="mt-20 flex justify-center w-full text-red-500 hover:text-white hover:bg-red-600 p-2 rounded-xl transition"
+        >
           <LogOut size={24} />
         </button>
       )}

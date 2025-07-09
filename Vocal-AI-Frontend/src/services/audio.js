@@ -43,3 +43,30 @@ export const downloadRecording = async (id) => {
   return res.data;
 };
 
+// 📊 Dashboard Summary (progress tracking + distribution + skills)
+export const fetchDashboardSummary = async () => {
+  const res = await API.get('/audio/summary');
+     console.log("🔥 API RAW summry:", res.data); // <-- Check structure
+  return res.data.data; // You already unwrap in services
+};
+
+// 📅 Monthly progress (bar chart)
+export const fetchMonthlyProgress = async () => {
+  const res = await API.get('/audio/monthly');
+     console.log("🔥 API RAW month:", res.data); // <-- Check structure
+  return res.data.data;
+};
+
+// 📈 Pitch trend (line chart)
+export const fetchPitchTrend = async () => {
+  const res = await API.get('/audio/pitch-trend');
+     console.log("🔥 API pitch :", res.data); // <-- Check structure
+  return res.data.data;
+};
+
+// 🏅 Achievements
+export const fetchUserAchievements = async () => {
+  const res = await API.get('/audio/achievements');
+    console.log("🔥 API RAW response:", res.data); // <-- Check structure
+  return res.data.data;
+};

@@ -8,10 +8,9 @@ export default function Subscription() {
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <UserNavbar />
-        <main className="flex-1 overflow-auto bg-[#0c0a15] text-white p-6">
+        <main className="flex-1 overflow-auto bg-[#0c0a15] text-white">
           <PricingSection />
         </main>
-        
       </div>
     </div>
   );

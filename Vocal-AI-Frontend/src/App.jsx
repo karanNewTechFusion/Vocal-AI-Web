@@ -29,7 +29,7 @@ function App() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/" element={<Home />} />
+      <Route path="" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/features" element={<Features />} />
       <Route path="/testimonials" element={<Testimonials />} />

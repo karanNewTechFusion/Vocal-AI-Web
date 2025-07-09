@@ -4,6 +4,10 @@ import {
   deleteAudio,
   downloadAudio,
   finalizeAndSaveAudio,
+  getAudioSummary,
+  getMonthlyProgress,
+  getPitchTrend,
+  getUserAchievements,
   getUserAudios, 
   uploadAudioMiddleware,
 } from "../controllers/audioController.js";
@@ -20,5 +24,13 @@ router.get("/user/:userId", verifyAuth, getUserAudios);
 router.delete("/:id", verifyAuth, deleteAudio);
 
 router.get("/download/:id", verifyAuth, downloadAudio);
+
+router.get("/summary", verifyAuth, getAudioSummary);
+
+router.get("/monthly", verifyAuth, getMonthlyProgress);
+
+router.get("/pitch-trend", verifyAuth, getPitchTrend);
+
+router.get("/achievements", verifyAuth, getUserAchievements);
 
 export default router;
